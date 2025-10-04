@@ -4,12 +4,15 @@ import com.sathwikhbhat.tasktracker.domain.dto.TaskListDto;
 import com.sathwikhbhat.tasktracker.mappers.TaskListMapper;
 import com.sathwikhbhat.tasktracker.service.TaskListService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/task-lists")
@@ -37,6 +40,11 @@ public class TaskListController {
                 taskListService.createTaskList(
                         taskListMapper.fromDto(taskListDto))
         );
+    }
+
+    @GetMapping("/{id}")
+    public Optional<TaskListDto> getTaskListById(@PathVariable UUID id) {
+        return taskListService.getTaskList(id).map(taskListMapper::toDto);
     }
 
 }
