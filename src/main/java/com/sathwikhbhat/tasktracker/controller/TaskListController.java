@@ -4,6 +4,8 @@ import com.sathwikhbhat.tasktracker.domain.dto.TaskListDto;
 import com.sathwikhbhat.tasktracker.mappers.TaskListMapper;
 import com.sathwikhbhat.tasktracker.service.TaskListService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,6 +29,14 @@ public class TaskListController {
                 .stream()
                 .map(taskListMapper::toDto)
                 .toList();
+    }
+
+    @PostMapping
+    public TaskListDto createTaskList(@RequestBody TaskListDto taskListDto) {
+        return taskListMapper.toDto(
+                taskListService.createTaskList(
+                        taskListMapper.fromDto(taskListDto))
+        );
     }
 
 }
