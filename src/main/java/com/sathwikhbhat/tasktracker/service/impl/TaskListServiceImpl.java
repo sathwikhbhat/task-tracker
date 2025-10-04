@@ -3,6 +3,7 @@ package com.sathwikhbhat.tasktracker.service.impl;
 import com.sathwikhbhat.tasktracker.domain.entities.TaskList;
 import com.sathwikhbhat.tasktracker.repository.TaskListRepository;
 import com.sathwikhbhat.tasktracker.service.TaskListService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -50,6 +51,7 @@ public class TaskListServiceImpl implements TaskListService {
         return taskListRepository.findById(id);
     }
 
+    @Transactional
     @Override
     public TaskList updateTaskList(UUID id, TaskList taskList) {
         if (taskList.getId() == null) {
