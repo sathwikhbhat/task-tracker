@@ -6,6 +6,7 @@ import com.sathwikhbhat.tasktracker.service.TaskService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,6 +42,11 @@ public class TaskController {
     @GetMapping("/{taskId}")
     public Optional<TaskDto> getTask(@PathVariable UUID taskListId, @PathVariable UUID taskId) {
         return taskService.getTaskById(taskListId, taskId).map(taskMapper::toDto);
+    }
+
+    @PutMapping("/{taskId}")
+    public TaskDto updateTask(@PathVariable UUID taskListId, @PathVariable UUID taskId, @RequestBody TaskDto taskDto) {
+        return taskMapper.toDto(taskService.updateTask(taskListId, taskId, taskMapper.fromDto(taskDto)));
     }
 
 }
