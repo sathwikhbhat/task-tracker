@@ -3,6 +3,7 @@ package com.sathwikhbhat.tasktracker.controller;
 import com.sathwikhbhat.tasktracker.domain.dto.TaskListDto;
 import com.sathwikhbhat.tasktracker.mappers.TaskListMapper;
 import com.sathwikhbhat.tasktracker.service.TaskListService;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,6 +55,11 @@ public class TaskListController {
                 taskListService.updateTaskList(id,
                         taskListMapper.fromDto(taskListDto))
         );
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTaskList(@PathVariable UUID id) {
+        taskListService.deleteTaskList(id);
     }
 
 }
