@@ -76,10 +76,10 @@ The Task Tracker API provides comprehensive endpoints for managing task lists an
 #### Task Lists (`/task-lists`)
 - **GET** `/task-lists` - Retrieve all task lists
 - **POST** `/task-lists` - Create a new task list
-  - Body: `{ "name": "My Task List", "description": "List description" }`
+    - Body: `{ "title": "My Task List", "description": "List description" }`
 - **GET** `/task-lists/{id}` - Get a specific task list by ID
 - **PUT** `/task-lists/{id}` - Update an existing task list
-  - Body: Updated task list object
+    - Body: `{ "id": "<uuid>", "title": "Updated title", "description": "Updated description" }`
 - **DELETE** `/task-lists/{id}` - Delete a task list and all its tasks
 
 #### Tasks (`/task-lists/{taskListId}/tasks`)
@@ -87,10 +87,12 @@ Tasks are managed within the context of a specific task list:
 
 - **GET** `/task-lists/{taskListId}/tasks` - Get all tasks in a task list
 - **POST** `/task-lists/{taskListId}/tasks` - Create a new task in the specified list
-  - Body: `{ "title": "Task title", "description": "Task details", "completed": false }`
+    - Body:
+      `{ "title": "Task title", "description": "Task details", "dueDate": "2025-12-31T23:59:59", "priority": "HIGH" }`
 - **GET** `/task-lists/{taskListId}/tasks/{taskId}` - Get a specific task
 - **PUT** `/task-lists/{taskListId}/tasks/{taskId}` - Update an existing task
-  - Body: Updated task object
+    - Body:
+      `{ "id": "<uuid>", "title": "Updated title", "description": "New details", "dueDate": "2025-12-25T12:00:00", "priority": "LOW", "status": "CLOSED" }`
 - **DELETE** `/task-lists/{taskListId}/tasks/{taskId}` - Delete a specific task
 
 #### Response Format
@@ -102,6 +104,13 @@ All endpoints return appropriate HTTP status codes:
 - `400 Bad Request` - Invalid request data
 
 Error responses include detailed error messages handled by the global exception handler.
+
+### Progress & Counts
+
+Each task list response includes:
+
+- `count`: Number of tasks in the list
+- `progress`: Fraction (0.0 - 1.0) representing the proportion of tasks whose status is `CLOSED`
 
 ## Testing
 Run unit tests with:
